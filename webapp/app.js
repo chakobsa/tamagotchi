@@ -149,10 +149,20 @@ async function call(target, iface, fn, args = []) {
 }
 const has = (p, fn) => p.code && p.code.includes(petI.getFunction(fn).selector.slice(2));
 
+// Reads who a pet is, once. A failed read (RPC hiccup) is retried on the next refresh;
+// only a contract that really has no name()/owner() is marked as "not a Tamagotchi".
 async function loadIdentity(p) {
-  p.code = (await read.getCode(p.address)).toLowerCase();
+  p.tries = (p.tries || 0) + 1;
+  let code;
+  try { code = (await read.getCode(p.address)).toLowerCase(); } catch { return; }
+  p.code = code;
+  if (!has(p, "name") || !has(p, "owner")) { p.broken = true; p.loaded = true; return; }
   const fns = IDENTITY.filter((fn) => has(p, fn));
   const vals = await Promise.all(fns.map((fn) => call(p.address, petI, fn)));
+  if (vals[fns.indexOf("name")] === undefined || vals[fns.indexOf("owner")] === undefined) {
+    if (p.tries >= 5) { p.broken = true; p.loaded = true; }
+    return;
+  }
   fns.forEach((fn, i) => (p[fn] = vals[i]));
   p.broken = typeof p.name !== "string" || !p.owner;
   p.birthday = num(p.birthday);
@@ -220,7 +230,7 @@ async function poll() {
     blockNumber = block.number; chainOffset = block.timestamp - Date.now() / 1000; parkBank = bank ?? parkBank;
     const fresh = [];
     addrs.forEach((a, i) => { if (!pets.has(a)) { const p = { address: a, index: i }; pets.set(a, p); fresh.push(p); } });
-    await Promise.all(fresh.map(loadIdentity));
+    await Promise.all([...pets.values()].filter((p) => !p.loaded).map(loadIdentity));
     const focus = route.name === "pet" ? pets.get(route.addr) : null;
     const liveSet = new Set(currentPets());
     if (focus && focus.loaded && !focus.broken) liveSet.add(focus);
@@ -695,7 +705,8 @@ async function start() {
   if (!NET) return viewSetup(`Unknown network "${CFG.network}"`);
   if (!ethers.isAddress(CFG.park)) return viewSetup();
   CFG.park = ethers.getAddress(CFG.park);
-  read = new ethers.JsonRpcProvider(CFG.rpc || NET.rpc, NET.chainId, { staticNetwork: true, batchMaxCount: 40 });
+  // batchMaxCount 10: public RPCs cap JSON-RPC batches (mainnet.optimism.io rejects more than 10 with HTTP 413)
+  read = new ethers.JsonRpcProvider(CFG.rpc || NET.rpc, NET.chainId, { staticNetwork: true, batchMaxCount: 10 });
   try {
     if ((await read.getCode(CFG.park)) === "0x") return viewSetup(`There's no contract at that address on ${NET.label}.`);
     snackAddr = await call(CFG.park, parkI, "snack");
