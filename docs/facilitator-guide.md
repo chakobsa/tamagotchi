@@ -126,9 +126,23 @@ the web app (including its wallet flows, driven by a scripted browser).
 
 ## 3. Preparation
 
+**Status for the St. Nicholas workshop (Marco, Yungwoo, Lis), as of 2026-10-21:**
+
+| | |
+|---|---|
+| Bank funded on OP Mainnet (0.00397 ETH) | ✅ done |
+| Real-chain rehearsal (park `0x3967DA9AfAb055b6a5268c28d0718cf51EFD3758`, set aside in `.workshop/park-optimism-rehearsal.env`) | ✅ passed |
+| Pet Park app live at https://tamagotchi.chakobsa.cc | ✅ done |
+| Code pushed to https://github.com/chakobsa/tamagotchi | ✅ done |
+| **Class park deployed + `config.js` uploaded** | ⬜ to do: `./scripts/deploy-park.sh && ./scripts/webapp-config.sh`, upload `webapp/config.js` |
+| Your demo pet "Prof" | ⬜ to do |
+| Printouts | ⬜ to do |
+
+The day itself, step by step: **`docs/run-sheet.md`**.
+
 ### Two weeks before
-- [ ] Install on your laptop: [Foundry](https://getfoundry.sh) (`forge`, `cast`, `anvil`) and Node.
-- [ ] `./scripts/new-class.sh`: creates the class wallets (one secret mnemonic in `.workshop/`) and
+- [x] Install on your laptop: [Foundry](https://getfoundry.sh) (`forge`, `cast`, `anvil`) and Node.
+- [x] `./scripts/new-class.sh`: creates the class wallets (one secret mnemonic in `.workshop/`) and
       prints the **bank address** (wallet #0). The bank pays for the Pet Park deploy and the students' gas.
 - [x] Fund the bank: about **US$10 of ETH** withdrawn to the bank address **on Optimism (OP Mainnet)**
       (done 2026-10-21: 0.00397 ETH). That's ~100x what a class uses; it covers future classes too.
@@ -161,13 +175,15 @@ forge test                                   # 28 tests, all must pass
 Rehearse with a throwaway park, then move `.workshop/park-optimism.env` aside and deploy a fresh park
 for the class, so the rehearsal's test pets don't sit in the class park.
 
-- [ ] Put the starter file behind a one-click link (a shared doc, a gist, or GitHub: Remix opens
-      `https://remix.ethereum.org/#url=<raw file URL>` directly).
+- [x] One-click starter link (Remix opens files straight from the public repo):
+      `https://remix.ethereum.org/#url=https://raw.githubusercontent.com/chakobsa/tamagotchi/main/contracts/student/steps/Step0_Starter.sol`
+      For a student who falls behind, swap the file name for `Step1_Egg.sol`, `Step2_Hunger.sol`,
+      `Step3_PlayAndSleep.sol`, or use `contracts/student/Tamagotchi.sol` (the complete pet).
 - [ ] Print `docs/code-along.md`, the student handout and the challenge cards.
 
 ### One hour before
 - [ ] `./scripts/budget.sh`: the bank has at least 0.001 ETH.
-- [ ] The Pet Park app on the projector in big-screen mode (`https://your-domain/?screen=1`), full
+- [ ] The Pet Park app on the projector in big-screen mode (`https://tamagotchi.chakobsa.cc/?screen=1`), full
       screen (F11). The *Theme* button: light usually projects better. Write the app's address on the board.
 - [ ] On the board: **remix.ethereum.org**, the **Pet Park address**, the **starter link**, and the
       app address.

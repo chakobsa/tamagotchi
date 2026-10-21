@@ -35,6 +35,7 @@ deploy/                              nginx / Caddy configs + how to deploy the w
   (scripts/webapp-config.sh writes webapp/config.js from the deployed park)
 docs/
   facilitator-guide.md               why OP Mainnet, run of show, setup checklists, troubleshooting
+  run-sheet.md                       one page for the day: what to do, say and ask, block by block
   code-along.md                      exactly what students type at each step
   student-handout.md                 one page per student
   challenge-cards.md                 bronze / silver / gold "make it yours" tasks
@@ -57,7 +58,7 @@ npx http-server webapp -p 8700         # or try it locally first → http://127.
 `.workshop/` holds the class mnemonic (it controls the bank's real ETH) and deployed addresses.
 It's git-ignored: keep it that way.
 
-Read `docs/facilitator-guide.md` before the workshop.
+Read `docs/facilitator-guide.md` before the workshop. Live app: https://tamagotchi.chakobsa.cc
 
 ## Slides
 
