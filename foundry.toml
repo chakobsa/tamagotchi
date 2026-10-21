@@ -1,0 +1,9 @@
+[profile.default]
+src = "contracts"
+test = "test"
+out = "out"
+libs = ["lib"]
+solc_version = "0.8.30"
+# Same as Remix defaults (optimizer off, no via-ir) so what passes here compiles there.
+optimizer = false
+remappings = ["forge-std/=lib/forge-std/src/"]

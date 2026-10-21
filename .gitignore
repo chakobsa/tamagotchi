@@ -1,0 +1,11 @@
+# Class wallets (mnemonic = real coins on mainnet) and deployed addresses: never commit
+.workshop/
+# Foundry build output
+out/
+cache/
+broadcast/
+# Local stuff
+node_modules/
+.DS_Store
+*.log
+.env

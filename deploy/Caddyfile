@@ -1,0 +1,17 @@
+# Pet Park web app with Caddy (automatic HTTPS). Put this in /etc/caddy/Caddyfile, set your domain,
+# then: sudo systemctl reload caddy
+petpark.example.com {
+    root * /var/www/petpark
+    encode gzip
+    try_files {path} /index.html
+    file_server
+
+    header {
+        Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://rpc.xdcrpc.com https://erpc.xinfin.network https://rpc1.xinfin.network https://rpc.gnosischain.com https://forno.celo.org https://forno.celo-sepolia.celo-testnet.org; frame-ancestors 'none'; base-uri 'none'; form-action 'none'"
+        X-Content-Type-Options "nosniff"
+        Referrer-Policy "strict-origin-when-cross-origin"
+        Permissions-Policy "camera=(), microphone=(), geolocation=()"
+    }
+    @config path /config.js
+    header @config Cache-Control "no-store"
+}

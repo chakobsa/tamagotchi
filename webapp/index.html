@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pet Park</title>
+<meta name="description" content="Tamagotchis that live on the blockchain. Feed them, play with them, hug them.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script src="config.js"></script>
+<script src="vendor/ethers.umd.min.js"></script>
+<script src="app.js" defer></script>
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="#/" aria-label="Pet Park home">
+    <span class="logo">PET PARK</span>
+    <span class="net" id="net-badge">…</span>
+  </a>
+  <nav class="tabs" aria-label="Pages">
+    <a href="#/" data-route="park">The park</a>
+    <a href="#/me" data-route="me">My pets</a>
+    <a href="#/how" data-route="how">How it works</a>
+  </nav>
+  <div class="wallet" id="wallet"></div>
+</header>
+<main id="view" tabindex="-1"></main>
+<div class="toasts" id="toasts" aria-live="polite"></div>
+<footer class="foot">
+  <span id="foot-status">Connecting to the blockchain…</span>
+  <span class="foot-right">
+    <button class="link" id="btn-screen" type="button">Big screen</button>
+    <button class="link" id="btn-theme" type="button">Theme</button>
+  </span>
+</footer>
+<noscript>Pet Park needs JavaScript to read the blockchain.</noscript>
+</body>
+</html>
