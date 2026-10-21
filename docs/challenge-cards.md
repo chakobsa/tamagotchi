@@ -2,7 +2,7 @@
 
 Edit `Tamagotchi.sol`, compile, **deploy a new version** (v5, v6…) and **approve it**: every
 version has a new address. (Your old pets can't change: deployed code is permanent. They stay
-on XDC, exactly as you wrote them.)
+on OP Mainnet, exactly as you wrote them.)
 
 Teacher: tested solutions for every card are in `contracts/solutions/TamagotchiPlus.sol`
 (search for `CHALLENGE`).
@@ -43,7 +43,7 @@ Teacher: tested solutions for every card are in `contracts/solutions/TamagotchiP
 > How far *forward* should you move `lastPlayed`?
 
 **S3 · Announce it.** Add `event Cleaned(address indexed by);` and `emit` it in `clean()`.
-Find it on **xdcscan.com**: open your pet's address → the *Events* (or *Logs*) tab. (The Pet Park app knows an event called `Cleaned`
+Find it on **optimistic.etherscan.io**: open your pet's address → the *Events* (or *Logs*) tab. (The Pet Park app knows an event called `Cleaned`
 and shows it too. Call yours `Washed` instead: why does the app go quiet?)
 
 ---

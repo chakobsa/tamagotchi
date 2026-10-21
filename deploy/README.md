@@ -12,7 +12,7 @@ students' MetaMask. Your VPS only serves files.
 ```
 
 `config.js` is the only file you edit. (URL parameters override it for testing:
-`?network=xdc&park=0x…`.)
+`?network=optimism&park=0x…`.)
 
 ## 2. Upload
 
@@ -55,7 +55,7 @@ warnings and keeps the page from being tampered with on school wifi.
 | | |
 |---|---|
 | Your VPS | the static files |
-| The blockchain RPC | reads (`rpc.xdcrpc.com` by default; all three public XDC RPCs allow browser access) |
+| The blockchain RPC | reads (`mainnet.optimism.io` by default; it and `optimism-rpc.publicnode.com` allow browser access) |
 | MetaMask (in the student's browser) | signs transactions |
 | fonts.googleapis.com | the pixel and text fonts (the app works without them, with system fonts) |
 

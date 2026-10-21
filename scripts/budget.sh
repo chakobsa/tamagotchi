@@ -9,7 +9,7 @@ TOTAL_WEI=$(( (GAS_PER_STUDENT * STUDENTS + GAS_TEACHER) * GAS_PRICE ))
 
 echo "Network        : $NETWORK_LABEL (chain $CHAIN_ID) via $RPC_URL"
 echo "Gas price now  : $GAS_PRICE wei ($(cast from-wei "$GAS_PRICE" gwei) gwei)"
-echo "Per student    : $(eth $PER_STUDENT_WEI) $CURRENCY  (~$GAS_PER_STUDENT gas)"
+echo "Per student    : $(eth $PER_STUDENT_WEI) $CURRENCY  (~$GAS_PER_STUDENT gas$([[ $NETWORK == optimism || $NETWORK == base ]] && echo ", plus a tiny L1 data fee"))"
 echo "Whole class    : $(eth $TOTAL_WEI) $CURRENCY  for $STUDENTS students + teacher, at today's price"
 if [[ -n "${PRICE_ID:-}" ]]; then
   PRICE="$(curl -s --max-time 10 "https://api.coingecko.com/api/v3/simple/price?ids=$PRICE_ID&vs_currencies=usd" | sed -n 's/.*"usd":\([0-9.e-]*\).*/\1/p')"

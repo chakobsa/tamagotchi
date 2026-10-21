@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Shared settings for every workshop script. Override any of them with env vars:
-#   NETWORK=xdc (default, mainnet) | gnosis | celo | celo-sepolia (testnet) | local
+#   NETWORK=optimism (default, OP Mainnet) | base | xdc | gnosis | celo | celo-sepolia (testnet) | local
 #   RPC_URL=...      use another RPC endpoint instead of the public one
 #   STUDENTS=3       how many student wallets to manage (fund-wallets.sh, wallet-cards.sh)
 set -euo pipefail
@@ -9,15 +9,27 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 STATE_DIR="$ROOT/.workshop"            # class mnemonic + deployed addresses (git-ignored)
 mkdir -p "$STATE_DIR"
 
-NETWORK="${NETWORK:-xdc}"
+NETWORK="${NETWORK:-optimism}"
 STUDENTS="${STUDENTS:-3}"
 PORT="${PORT:-8545}"
 
-# Networks. The workshop runs on a REAL chain with very cheap gas (chosen 2026-10-21 by measuring
-# gas price x token price for the ~12M gas a student uses): XDC ~ US$0.006 per student, Gnosis ~ US$0.00,
-# Celo ~ US$0.21. celo-sepolia is a free testnet (official faucet, no login) for rehearsals.
+# Networks. The workshop runs on a REAL chain with very cheap gas, measured 2026-10-21 for the ~12M gas
+# a student uses: OP Mainnet ~ US$0.03 per student (ETH, withdrawable from any exchange straight onto
+# Optimism: no bridge), Base ~ US$0.18, XDC ~ US$0.006 (but hard to buy), Gnosis ~ 0, Celo ~ US$0.21.
+# OP-stack chains (optimism, base) also charge a tiny L1 data fee: ~0.0000001 ETH per pet deploy.
+# celo-sepolia is a free testnet (official faucet, no login) for rehearsals.
 # STUDENT_DEFAULT = coins sent to each student (~10x what they use). PRICE_ID = CoinGecko id, for budget.sh.
 case "$NETWORK" in
+  optimism)
+    DEFAULT_RPC="https://mainnet.optimism.io"       # also: https://optimism-rpc.publicnode.com
+    CHAIN_ID=10; NETWORK_LABEL="OP Mainnet"; CURRENCY="ETH"
+    EXPLORER="https://optimistic.etherscan.io"; FAUCET=""; STUDENT_DEFAULT=0.0003; PRICE_ID=ethereum
+    VERIFY_ARGS=(--verifier sourcify) ;;
+  base)
+    DEFAULT_RPC="https://base-rpc.publicnode.com"   # also: https://mainnet.base.org (rejects some log queries)
+    CHAIN_ID=8453; NETWORK_LABEL="Base"; CURRENCY="ETH"
+    EXPLORER="https://basescan.org"; FAUCET=""; STUDENT_DEFAULT=0.0005; PRICE_ID=ethereum
+    VERIFY_ARGS=(--verifier sourcify) ;;
   xdc)
     DEFAULT_RPC="https://rpc.xdcrpc.com"            # also: https://erpc.xinfin.network, https://rpc1.xinfin.network
     CHAIN_ID=50; NETWORK_LABEL="XDC Network"; CURRENCY="XDC"
@@ -42,7 +54,7 @@ case "$NETWORK" in
     DEFAULT_RPC="http://127.0.0.1:$PORT"
     CHAIN_ID=31337; NETWORK_LABEL="Local"; CURRENCY="ETH"
     EXPLORER=""; FAUCET=""; STUDENT_DEFAULT=1; PRICE_ID=; VERIFY_ARGS=() ;;
-  *) echo "Unknown NETWORK=$NETWORK (use xdc, gnosis, celo, celo-sepolia or local)"; exit 1 ;;
+  *) echo "Unknown NETWORK=$NETWORK (use optimism, base, xdc, gnosis, celo, celo-sepolia or local)"; exit 1 ;;
 esac
 RPC_URL="${RPC_URL:-$DEFAULT_RPC}"
 
@@ -76,6 +88,6 @@ eth() { cast from-wei "$1"; }          # wei -> whole coins (ETH, XRP…), for p
 # How to get the gas coin into the bank, for messages
 funding_hint() {
   if [[ -n "$FAUCET" ]]; then echo "free from the faucet: $FAUCET";
-  else echo "buy a few $CURRENCY on an exchange and withdraw them to this address on $NETWORK_LABEL (chain $CHAIN_ID), not on another chain"; fi
+  else echo "buy a little $CURRENCY on an exchange (for ETH: about US\$ 10, the usual minimum withdrawal) and withdraw it to this address on $NETWORK_LABEL (chain $CHAIN_ID), not on another chain"; fi
 }
 link_addr() { [[ -n "$EXPLORER" ]] && echo "$EXPLORER/address/$1" || echo "$1"; }

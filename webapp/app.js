@@ -5,6 +5,8 @@
 
 // ---------------------------------------------------------------- networks
 const NETWORKS = {
+  optimism:       { label: "OP Mainnet",   chainId: 10,       currency: "ETH",  rpc: "https://mainnet.optimism.io",                 explorer: "https://optimistic.etherscan.io",      pollMs: 4000, replayBlocks: 1500, maxRange: 500 },
+  base:           { label: "Base",         chainId: 8453,     currency: "ETH",  rpc: "https://base-rpc.publicnode.com",             explorer: "https://basescan.org",                 pollMs: 4000, replayBlocks: 1500, maxRange: 500 },
   xdc:            { label: "XDC Network",  chainId: 50,       currency: "XDC",  rpc: "https://rpc.xdcrpc.com",                      explorer: "https://xdcscan.com",                  pollMs: 4000, replayBlocks: 1500, maxRange: 500 },
   gnosis:         { label: "Gnosis",       chainId: 100,      currency: "xDAI", rpc: "https://rpc.gnosischain.com",                 explorer: "https://gnosis.blockscout.com",        pollMs: 5000, replayBlocks: 700,  maxRange: 700 },
   celo:           { label: "Celo",         chainId: 42220,    currency: "CELO", rpc: "https://forno.celo.org",                      explorer: "https://celo.blockscout.com",          pollMs: 4000, replayBlocks: 3000, maxRange: 1000 },
@@ -15,7 +17,7 @@ const params = new URLSearchParams(location.search);
 const store = { get(k) { try { return localStorage.getItem(k); } catch { return null; } },
                 set(k, v) { try { localStorage.setItem(k, v); } catch {} } };
 const CFG = {
-  network: params.get("network") || window.PETPARK_CONFIG?.network || store.get("network") || "xdc",
+  network: params.get("network") || window.PETPARK_CONFIG?.network || store.get("network") || "optimism",
   park: params.get("park") || window.PETPARK_CONFIG?.park || store.get("park") || "",
   rpc: params.get("rpc") || window.PETPARK_CONFIG?.rpc || "",
 };
@@ -94,7 +96,8 @@ function ageText(p) {
   if (m < 2880) return `${Math.floor(m / 60)} h ${m % 60} min old`;
   return `${Math.floor(m / 1440)} days old`;
 }
-const coin = (wei, d = 3) => Number(ethers.formatEther(wei)).toLocaleString(undefined, { maximumFractionDigits: d });
+// 2.5 -> "2.5", 0.000299 -> "0.000299": small ETH amounts keep 3 significant digits
+const coin = (wei) => { const v = Number(ethers.formatEther(wei)); return v >= 1 ? v.toLocaleString(undefined, { maximumFractionDigits: 3 }) : v.toLocaleString(undefined, { maximumSignificantDigits: 3 }); };
 
 // ---------------------------------------------------------------- pixel pets (same drawings as the slides)
 const BODY = ["....XXXXXX....", "..XXXXXXXXXX..", ".XXXXXXXXXXXX.", ".XXXXXXXXXXXX.", "XXXXXXXXXXXXXX", "XXXXXXXXXXXXXX",
@@ -303,7 +306,7 @@ async function ensureChain() {
       if (e.code !== 4902 && e?.data?.originalError?.code !== 4902) throw e;
       await window.ethereum.request({ method: "wallet_addEthereumChain", params: [{
         chainId: hex, chainName: NET.label, rpcUrls: [CFG.rpc || NET.rpc],
-        nativeCurrency: { name: NET.currency, symbol: NET.currency, decimals: 18 },
+        nativeCurrency: { name: NET.currency === "ETH" ? "Ether" : NET.currency, symbol: NET.currency, decimals: 18 },
         blockExplorerUrls: NET.explorer ? [NET.explorer] : [] }] });
     }
     cid = await window.ethereum.request({ method: "eth_chainId" });
