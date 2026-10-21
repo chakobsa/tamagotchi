@@ -6,8 +6,8 @@
 |---|---|
 | Remix | `remix.ethereum.org` |
 | Starter file | open the link your teacher shares (it opens Remix with the file) |
-| Pet Park address | `0x________________________________________` |
-| SNACK token address | `0x________________________________________` |
+| Pet Park address | `0x6f92eE0FC91bd93479063512384b4d8016ee917E` |
+| SNACK token address | `0x13de2eF3663870c72842d8e4A488c35b8923b06e` |
 | **Pet Park app** | **tamagotchi.chakobsa.cc** |
 | **My wallet address** | `0x________________________________________` |
 | **My newest pet's address** | `0x________________________________________` |

@@ -26,6 +26,7 @@ scripts/                             all take NETWORK=optimism (default) | base 
   fund-wallets.sh                    tops up the class wallets (cards) to STUDENT_ETH
   wallet-cards.sh                    backup: printable cards for class wallets
   rehearse.sh                        the whole student journey (all 4 steps) with class wallets #1 and #2
+  demo-pet.sh [name]                 morning of the class: a fresh, fed demo pet ("Prof") in the class park
   faucet-control.sh <n> <s>          live-tune the SNACK faucet (happy hour)
   sweep.sh                           leftover coins from the class wallets back to the bank
   local-chain.sh                     free rehearsal: local chain, or FORK=optimism for a copy of OP Mainnet

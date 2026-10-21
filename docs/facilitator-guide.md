@@ -134,8 +134,9 @@ the web app (including its wallet flows, driven by a scripted browser).
 | Real-chain rehearsal (park `0x3967DA9AfAb055b6a5268c28d0718cf51EFD3758`, set aside in `.workshop/park-optimism-rehearsal.env`) | ✅ passed |
 | Pet Park app live at https://tamagotchi.chakobsa.cc | ✅ done |
 | Code pushed to https://github.com/chakobsa/tamagotchi | ✅ done |
-| **Class park deployed + `config.js` uploaded** | ⬜ to do: `./scripts/deploy-park.sh && ./scripts/webapp-config.sh`, upload `webapp/config.js` |
-| Your demo pet "Prof" | ⬜ to do |
+| Class park deployed: **`0x6f92eE0FC91bd93479063512384b4d8016ee917E`** (SNACK `0x13de2eF3663870c72842d8e4A488c35b8923b06e`) | ✅ done |
+| `webapp/config.js` points at the class park (pushed to GitHub) | ✅ done; ⬜ upload it to the VPS |
+| Demo pet "Prof" | ⬜ on the morning of the class: `./scripts/demo-pet.sh` (a pet starves 50 min after its last meal) |
 | Printouts | ⬜ to do |
 
 The day itself, step by step: **`docs/run-sheet.md`**.
@@ -187,7 +188,7 @@ for the class, so the rehearsal's test pets don't sit in the class park.
       screen (F11). The *Theme* button: light usually projects better. Write the app's address on the board.
 - [ ] On the board: **remix.ethereum.org**, the **Pet Park address**, the **starter link**, and the
       app address.
-- [ ] Deploy your own demo pet in Remix ("Prof") so the park isn't empty.
+- [ ] `./scripts/demo-pet.sh`: puts a fresh, fed "Prof" in the class park so the big screen isn't empty.
 
 ---
 

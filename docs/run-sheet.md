@@ -2,11 +2,11 @@
 
 One page to keep next to you. Full detail: `facilitator-guide.md`. Slide numbers match the deck.
 
-## Before the day (still to do)
-1. **Class park:** `./scripts/deploy-park.sh && ./scripts/webapp-config.sh`, then upload `webapp/config.js`
-   to the VPS. https://tamagotchi.chakobsa.cc then shows the (empty) class park.
-2. **Demo pet "Prof":** `./scripts/fund-address.sh 0xYourMetaMask`, then do the code-along yourself
-   (it doubles as your timing rehearsal).
+## Before the day
+1. ✅ **Class park** deployed: **`0x6f92eE0FC91bd93479063512384b4d8016ee917E`**
+   (SNACK token `0x13de2eF3663870c72842d8e4A488c35b8923b06e`). ⬜ Upload `webapp/config.js` to the VPS
+   (or `git pull` there): https://tamagotchi.chakobsa.cc then opens on the class park.
+2. **Morning of the class:** `./scripts/demo-pet.sh` puts a fresh, fed "Prof" in the park.
 3. **Starter link** (put it in a QR code or the class chat):
    `https://remix.ethereum.org/#url=https://raw.githubusercontent.com/chakobsa/tamagotchi/main/contracts/student/steps/Step0_Starter.sol`
    Checkpoints if someone falls behind: same URL with `Step1_Egg.sol`, `Step2_Hunger.sol`,
@@ -17,7 +17,7 @@ One page to keep next to you. Full detail: `facilitator-guide.md`. Slide numbers
 - Laptop on power, sleep off, terminal open in the repo.
 - `./scripts/budget.sh`: bank has ≥ 0.001 ETH.
 - Projector: https://tamagotchi.chakobsa.cc/?screen=1 full screen; deck in another tab.
-- Board: `remix.ethereum.org` · `tamagotchi.chakobsa.cc` · Pet Park address · starter link.
+- Board: `remix.ethereum.org` · `tamagotchi.chakobsa.cc` · Pet Park `0x6f92eE0FC91bd93479063512384b4d8016ee917E` · starter link.
 
 ## The workshop
 

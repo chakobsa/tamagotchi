@@ -1,7 +1,7 @@
-// Pet Park web app settings. Edit this file on your server (or run ./scripts/webapp-config.sh).
-// URL parameters override it: ?network=optimism&park=0x…&rpc=https://…
+// Pet Park web app settings — written by scripts/webapp-config.sh on 2026-10-21T18:56Z.
+// URL parameters override it: ?network=…&park=…&rpc=…
 window.PETPARK_CONFIG = {
-  network: "optimism",   // optimism | base | xdc | gnosis | celo | celo-sepolia | local
-  park: "",              // the Pet Park address printed by ./scripts/deploy-park.sh
-  rpc: "",               // optional: your own RPC URL (empty = the network's public one)
+  network: "optimism",
+  park: "0x6f92eE0FC91bd93479063512384b4d8016ee917E",
+  rpc: "",
 };

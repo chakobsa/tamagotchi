@@ -9,3 +9,5 @@ node_modules/
 .DS_Store
 *.log
 .env
+# Rendered slide PDFs (contain personal contact details; the repo is public)
+slides/*.pdf
